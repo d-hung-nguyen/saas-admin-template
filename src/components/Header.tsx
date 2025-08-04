@@ -4,6 +4,12 @@ const links = [
   { href: "/admin", label: "Admin" },
   { href: "/admin/customers", label: "Customers" },
   { href: "/admin/subscriptions", label: "Subscriptions" },
+   { href:"/admin/agents", label: "Agents" },
+  { href: "/admin/api-documentation", label: "API Documentation" },
+  { href: "/admin/logout", label: "Logout" },
+  
+  // Add more links as needed...
+
 ]
 
 export function Header({ currentPath }: { currentPath: string }) {

@@ -11,18 +11,12 @@ const apiTokenSet = API_TOKEN && API_TOKEN !== ""
 ---
 
 <script is:inline>
-  const getThemePreference = () => {
-    if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
-      return localStorage.getItem("theme")
-    }
-    return window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? "dark"
-      : "light"
-  }
-  const isDark = getThemePreference() === "dark"
-  document.documentElement.classList[isDark ? "add" : "remove"]("dark")
+  // Force dark theme for the green gradient design
+  document.documentElement.classList.add("dark")
 
   if (typeof localStorage !== "undefined") {
+    localStorage.setItem("theme", "dark")
+
     const observer = new MutationObserver(() => {
       const isDark = document.documentElement.classList.contains("dark")
       localStorage.setItem("theme", isDark ? "dark" : "light")
@@ -34,7 +28,7 @@ const apiTokenSet = API_TOKEN && API_TOKEN !== ""
   }
 </script>
 
-<html lang='en'>
+<html lang='en' class='dark'>
   <head>
     <meta charset='UTF-8' />
     <meta name='viewport' content='width=device-width' />
@@ -44,17 +38,38 @@ const apiTokenSet = API_TOKEN && API_TOKEN !== ""
       {title ? `${title} - SaaS Admin Template` : "SaaS Admin Template"}
     </title>
   </head>
-  <body>
+  <body class='min-h-screen'>
     <Header currentPath={currentPath} />
-    <div class='flex-1 space-y-4 p-8 pt-6'>
-      <div class='mb-4'>
-        {!apiTokenSet && <ApiTokenMissingCard />}
+    <div class='container mx-auto p-8'>
+      <div class='glass-card p-8 max-w-6xl mx-auto'>
+        {
+          !apiTokenSet && (
+            <div class='mb-6'>
+              <ApiTokenMissingCard />
+            </div>
+          )
+        }
+        <div class='flex items-center justify-between mb-8'>
+          <div class='flex items-center gap-4'>
+            <div
+              class='h-12 w-12 rounded-2xl border-4 border-emerald-500 bg-gradient-to-br from-emerald-400 to-emerald-600 shadow-lg flex items-center justify-center emerald-glow'
+            >
+              <span class='text-white font-bold text-xl'>S</span>
+            </div>
+            <div>
+              <h1 class='text-xl font-medium text-emerald-200'>Travel Agent</h1>
+              <h2 class='text-3xl font-medium text-white'>
+                An efficient tool to <span class='emerald-accent'>manage</span> your
+                <span class='emerald-accent'>incentive program</span>
+              </h2>
+            </div>
+          </div>
+          <slot name='actions' />
+        </div>
+        <div class='space-y-6'>
+          <slot />
+        </div>
       </div>
-      <div class='flex items-center justify-between'>
-        <h2 class='text-3xl font-bold tracking-tight'>{title}</h2>
-        <slot name='actions' />
-      </div>
-      <slot />
     </div>
   </body>
 </html>
