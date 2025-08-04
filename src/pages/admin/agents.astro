@@ -1,0 +1,22 @@
+---
+import Layout from "@/layouts/Layout.astro"
+import { AgentService } from "@/lib/services/agent"
+import { AgentsTable } from "@/components/admin/agents-table"
+import { CreateAgentButton } from "@/components/admin/create-agent"
+
+const { INCENTIVE_DB, API_TOKEN } = Astro.locals.runtime.env
+
+const agentService = new AgentService(INCENTIVE_DB as D1Database)
+const agents = await agentService.getAll()
+---
+
+<Layout title='Agents'>
+  <div class='space-y-4'>
+    <div class='flex items-center justify-between'>
+      <h2 class='text-xl font-bold tracking-tight text-green-900'>Agents</h2>
+      <CreateAgentButton apiToken={String(API_TOKEN)} client:only='react' />
+    </div>
+
+    <AgentsTable data={agents} client:only='react' />
+  </div>
+</Layout>

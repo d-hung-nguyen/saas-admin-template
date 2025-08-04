@@ -2,7 +2,7 @@
   "name": "saas-admin-template",
   "description": "Admin dashboard template built with Astro, shadcn/ui, and Cloudflare's developer stack",
   "cloudflare": {
-    "label": "SaaS Admin Template",
+    "label": "Travel Agent Incentive Program",
     "products": [
       "Workers",
       "D1"
@@ -25,6 +25,7 @@
     "@radix-ui/react-dialog": "1.1.10",
     "@radix-ui/react-label": "2.1.4",
     "@radix-ui/react-navigation-menu": "1.2.9",
+    "@radix-ui/react-select": "^2.2.5",
     "@radix-ui/react-slot": "1.2.0",
     "@tanstack/react-table": "8.21.3",
     "@types/react": "19.0.10",
@@ -39,6 +40,7 @@
     "tailwind-merge": "3.3.1",
     "tailwindcss": "^3.4.0",
     "tailwindcss-animate": "1.0.7",
+    "uuid": "^11.1.0",
     "zod": "3.25.67"
   },
   "devDependencies": {
@@ -52,9 +54,10 @@
     "db:migrate": "wrangler d1 migrations apply DB --local",
     "db:migrate:remote": "wrangler d1 migrations apply DB --remote",
     "deploy": "npm run wrangler:wrapper && wrangler deploy",
-    "dev": "npm run db:migrate && npm run build && npm run wrangler:wrapper && npx wrangler dev --port 4321",
+    "dev": "npm run db:migrate && npm run build && npm run wrangler:wrapper && npx wrangler dev --port 4321 --live-reload",
+    "dev:watch": "npm run db:migrate && npm run build && npm run wrangler:wrapper && npx wrangler dev --port 4321 --live-reload --watch",
     "predeploy": "npm run db:migrate:remote",
     "preview": "npm run build && npm run wrangler:wrapper && wrangler dev",
-    "wrangler:wrapper": "cp src/workflows/wrapper.js dist/index.js"
+    "wrangler:wrapper": "echo 'if (typeof MessageChannel === \"undefined\") { globalThis.MessageChannel = class { constructor() { this.port1 = { postMessage: () => {}, onmessage: null, addEventListener: () => {}, removeEventListener: () => {}, start: () => {}, close: () => {} }; this.port2 = { postMessage: () => {}, onmessage: null, addEventListener: () => {}, removeEventListener: () => {}, start: () => {}, close: () => {} }; } }; }' | cat - src/workflows/wrapper.js > dist/index.js"
   }
 }

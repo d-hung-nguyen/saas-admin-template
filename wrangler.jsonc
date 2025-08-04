@@ -5,19 +5,27 @@
     "directory": "./dist"
   },
   "compatibility_date": "2025-04-01",
-  "compatibility_flags": ["nodejs_compat"],
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
   "observability": {
     "enabled": true
   },
   "upload_source_maps": true,
   "vars": {
-    "EXAMPLE_VALUE": "example_value"
+    "API_TOKEN": "f78c8aa3a1163de2e05978d4b67a91464e62f855a6f2702bb828b5815d065bbc"
   },
   "d1_databases": [
     {
       "binding": "DB",
       "database_name": "admin-db",
       "database_id": "84997764-52b9-4d20-99bc-d43cbfd86407"
+    },
+    {
+      "binding": "INCENTIVE_DB",
+      "database_name": "incentive",
+      "database_id": "d30c4d6e-e3eb-4c42-b2fd-63fd4aa9ea5b",
+      "migrations_dir": "./incentive-migrations"
     }
   ],
   "workflows": [

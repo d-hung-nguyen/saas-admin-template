@@ -7,10 +7,10 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import type { Table } from "@tanstack/react-table";
+import type { Table as TanstackTable } from "@tanstack/react-table";
 import { flexRender } from "@tanstack/react-table";
 
-export function DataTable({ table }: { table: Table }) {
+export function DataTable({ table }: { table: TanstackTable<any> }) {
   return (
     <Table>
       <TableHeader>
@@ -45,7 +45,7 @@ export function DataTable({ table }: { table: Table }) {
           ))
         ) : (
           <TableRow>
-            <TableCell colSpan={columns.length} className="h-24 text-center">
+            <TableCell colSpan={table.getAllColumns().length} className="h-24 text-center">
               No results.
             </TableCell>
           </TableRow>

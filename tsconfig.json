@@ -1,6 +1,6 @@
 {
   "extends": "astro/tsconfigs/strict",
-  "include": [".astro/types.d.ts", "**/*"],
+  "include": [".astro/types.d.ts", "**/*", "src/.dev.var"],
   "exclude": ["dist"],
   "compilerOptions": {
     "baseUrl": ".",

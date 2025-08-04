@@ -1,66 +1,254 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.9%;
-    --primary: 0 0% 9%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9%;
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
-    --accent: 0 0% 96.1%;
-    --accent-foreground: 0 0% 9%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 0 0% 3.9%;
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
-    --radius: 0.5rem;
+    /* Light theme - using green tones */
+    --background: 150 30% 15%;
+    --foreground: 150 10% 95%;
+    --card: 150 25% 18%;
+    --card-foreground: 150 10% 95%;
+    --popover: 150 25% 18%;
+    --popover-foreground: 150 10% 95%;
+    --primary: 150 80% 40%;
+    --primary-foreground: 150 10% 5%;
+    --secondary: 150 20% 25%;
+    --secondary-foreground: 150 10% 90%;
+    --muted: 150 15% 30%;
+    --muted-foreground: 150 10% 70%;
+    --accent: 150 60% 45%;
+    --accent-foreground: 150 10% 5%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 150 10% 95%;
+    --border: 150 20% 25%;
+    --input: 150 15% 20%;
+    --ring: 150 80% 50%;
+    --chart-1: 150 70% 50%;
+    --chart-2: 140 60% 45%;
+    --chart-3: 160 55% 40%;
+    --chart-4: 170 65% 35%;
+    --chart-5: 130 75% 45%;
+    --radius: 0.75rem;
   }
+
   .dark {
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
+    /* Dark theme - matching your green gradient image */
+    --background: 150 40% 8%;
+    --foreground: 150 15% 92%;
+    --card: 150 35% 12%;
+    --card-foreground: 150 15% 92%;
+    --popover: 150 35% 12%;
+    --popover-foreground: 150 15% 92%;
+    --primary: 150 80% 45%;
+    --primary-foreground: 150 20% 5%;
+    --secondary: 150 25% 18%;
+    --secondary-foreground: 150 15% 88%;
+    --muted: 150 20% 22%;
+    --muted-foreground: 150 10% 65%;
+    --accent: 150 70% 50%;
+    --accent-foreground: 150 20% 8%;
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 150 15% 92%;
+    --border: 150 25% 20%;
+    --input: 150 20% 18%;
+    --ring: 150 80% 50%;
+    --chart-1: 150 70% 50%;
+    --chart-2: 140 60% 45%;
+    --chart-3: 160 55% 40%;
+    --chart-4: 170 65% 35%;
+    --chart-5: 130 75% 45%;
   }
 }
+
 @layer base {
   * {
     @apply border-border;
   }
-  body {
-    @apply bg-background text-foreground;
+  
+  html {
+    @apply dark;
   }
+  
+  body {
+    @apply text-foreground;
+    /* Green gradient background matching your image */
+    background: linear-gradient(135deg, 
+      hsl(150, 50%, 5%) 0%,     /* Very dark green-black */
+      hsl(150, 40%, 8%) 25%,    /* Dark forest green */
+      hsl(150, 35%, 12%) 50%,   /* Medium dark green */
+      hsl(150, 30%, 18%) 75%,   /* Lighter dark green */
+      hsl(150, 25%, 25%) 100%   /* Darkest emerald */
+    );
+    min-height: 100vh;
+    background-attachment: fixed;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply relative overflow-hidden rounded-2xl;
+    background: rgba(0, 40, 20, 0.15);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(34, 197, 94, 0.1);
+    box-shadow: 
+      0 8px 32px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(34, 197, 94, 0.1);
+  }
+  
+  .glass-card::before {
+    content: '';
+    @apply absolute inset-0 rounded-2xl;
+    background: linear-gradient(
+      135deg,
+      rgba(34, 197, 94, 0.05) 0%,
+      rgba(16, 185, 129, 0.02) 50%,
+      rgba(5, 150, 105, 0.05) 100%
+    );
+    z-index: -1;
+  }
+  
+  .glass-button {
+    @apply relative overflow-hidden rounded-lg backdrop-blur-md;
+    background: linear-gradient(
+      135deg,
+      rgba(34, 197, 94, 0.2) 0%,
+      rgba(16, 185, 129, 0.15) 100%
+    );
+    border: 1px solid rgba(34, 197, 94, 0.2);
+    transition: all 0.3s ease;
+    box-shadow: 
+      0 4px 15px rgba(0, 0, 0, 0.2),
+      inset 0 1px 0 rgba(34, 197, 94, 0.1);
+  }
+  
+  .glass-button:hover {
+    background: linear-gradient(
+      135deg,
+      rgba(34, 197, 94, 0.3) 0%,
+      rgba(16, 185, 129, 0.25) 100%
+    );
+    border-color: rgba(34, 197, 94, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 
+      0 6px 20px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(34, 197, 94, 0.2);
+  }
+  
+  .glass-input {
+    @apply rounded-lg backdrop-blur-md border-0;
+    background: rgba(0, 40, 20, 0.2);
+    border: 1px solid rgba(34, 197, 94, 0.15);
+    color: hsl(150, 15%, 92%);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  .glass-input::placeholder {
+    color: rgba(34, 197, 94, 0.5);
+  }
+  
+  .glass-input:focus {
+    background: rgba(0, 40, 20, 0.3);
+    border-color: hsl(150, 80%, 45%);
+    box-shadow: 
+      inset 0 2px 4px rgba(0, 0, 0, 0.2),
+      0 0 0 2px rgba(34, 197, 94, 0.2);
+    outline: none;
+  }
+  
+  .emerald-accent {
+    color: hsl(150, 80%, 45%);
+  }
+  
+  .emerald-bg {
+    background: linear-gradient(
+      135deg,
+      rgba(34, 197, 94, 0.1) 0%,
+      rgba(16, 185, 129, 0.05) 100%
+    );
+  }
+}
+
+.scrollable-card {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(34, 197, 94, 0.3) transparent;
+}
+
+.scrollable-card::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollable-card::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollable-card::-webkit-scrollbar-thumb {
+  background: rgba(34, 197, 94, 0.3);
+  border-radius: 3px;
+}
+
+.scrollable-card::-webkit-scrollbar-thumb:hover {
+  background: rgba(34, 197, 94, 0.5);
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 300ms ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.button {
+  box-shadow: 
+    inset 0.5px 0.5px 2px 0px rgba(34, 197, 94, 0.1),
+    inset -0.5px -0.5px 2px 0px rgba(0, 0, 0, 0.2),
+    0 4px 15px rgba(0, 0, 0, 0.3);
+  @apply flex items-center justify-center gap-2 rounded-full text-sm backdrop-blur-sm transition-all;
+  background: linear-gradient(
+    135deg,
+    rgba(34, 197, 94, 0.15) 0%,
+    rgba(16, 185, 129, 0.1) 100%
+  );
+  border: 1px solid rgba(34, 197, 94, 0.2);
+  
+  &:hover {
+    background: linear-gradient(
+      135deg,
+      rgba(34, 197, 94, 0.25) 0%,
+      rgba(16, 185, 129, 0.2) 100%
+    );
+    transform: translateY(-1px);
+    box-shadow: 
+      inset 0.5px 0.5px 2px 0px rgba(34, 197, 94, 0.2),
+      inset -0.5px -0.5px 2px 0px rgba(0, 0, 0, 0.2),
+      0 6px 20px rgba(0, 0, 0, 0.4);
+  }
+  
+  &:active {
+    @apply scale-95;
+    transform: translateY(0px) scale(0.95);
+  }
+}
+
+/* Custom animations for the green theme */
+@keyframes emerald-glow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(34, 197, 94, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(34, 197, 94, 0.6);
+  }
+}
+
+.emerald-glow {
+  animation: emerald-glow 2s ease-in-out infinite;
+}
+
+/* Override any remaining light theme elements */
+* {
+  scrollbar-color: rgba(34, 197, 94, 0.3) transparent;
 }
