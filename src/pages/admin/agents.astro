@@ -6,14 +6,14 @@ import { AgentService } from "@/lib/services/agent"
 
 const { DB, API_TOKEN } = Astro.locals.runtime.env
 
-const agentService = new AgentService(DB as D1Database) // Use DB instead of INCENTIVE_DB
+const agentService = new AgentService(DB as D1Database)
 const agents = await agentService.getAll()
 ---
 
 <Layout title='Agents'>
   <div class='space-y-4'>
     <div class='flex items-center justify-between'>
-      <h2 class='text-xl font-bold tracking-tight text-green-900'>Agents</h2>
+      <h2 class='text-xl font-bold tracking-tight text-white'>Agents</h2>
       <CreateAgentButton apiToken={String(API_TOKEN)} client:only='react' />
     </div>
 
