@@ -1,10 +1,11 @@
 ---
+import { EditAgentModal } from "@/components/admin/edit-agent-modal"
 import { Badge } from "@/components/ui/badge"
 import {
-Table,
-TableBody,
-TableCell,
-TableRow
+  Table,
+  TableBody,
+  TableCell,
+  TableRow
 } from "@/components/ui/table"
 import Layout from "@/layouts/Layout.astro"
 import { AgentService } from "@/lib/services/agent"
@@ -12,77 +13,66 @@ import { AgentService } from "@/lib/services/agent"
 const { API_TOKEN, DB } = Astro.locals.runtime.env
 const { id } = Astro.params
 
-const agentService = new AgentService(DB as D1Database) // Use DB consistently
+const agentService = new AgentService(DB as D1Database)
 const agent = await agentService.getById(id as string)
 
 if (!agent) {
   return Astro.redirect("/admin/agents")
 }
 
-// Helper function to format role display
+// Helper functions remain the same...
 const formatRole = (role: string) => {
   switch (role) {
-    case "agent":
-      return "Agent"
-    case "hotel_admin":
-      return "Hotel Admin"
-    case "regional_admin":
-      return "Regional Admin"
-    case "global_admin":
-      return "Global Admin"
-    default:
-      return role
+    case "agent": return "Agent"
+    case "hotel_admin": return "Hotel Admin"
+    case "regional_admin": return "Regional Admin"
+    case "global_admin": return "Global Admin"
+    default: return role
   }
 }
 
-// Helper function to get role color
 const getRoleColor = (role: string) => {
   switch (role) {
-    case "agent":
-      return "default"
-    case "hotel_admin":
-      return "secondary"
-    case "regional_admin":
-      return "outline"
-    case "global_admin":
-      return "destructive"
-    default:
-      return "default"
+    case "agent": return "default"
+    case "hotel_admin": return "secondary"
+    case "regional_admin": return "outline"
+    case "global_admin": return "destructive"
+    default: return "default"
   }
 }
 ---
 
 <Layout title={`${agent.first_name} ${agent.last_name}` || agent.email}>
-  <h2 class='text-xl font-bold tracking-tight'>Agent Details</h2>
+  <h2 class='text-xl font-bold tracking-tight text-white'>Agent Details</h2>
 
   <div class='space-y-6'>
     <!-- Basic Information -->
-    <div class='rounded-lg border p-6'>
-      <h3 class='text-lg font-semibold mb-4'>Basic Information</h3>
+    <div class='glass-card p-6'>
+      <h3 class='text-lg font-semibold mb-4 text-emerald-200'>Basic Information</h3>
       <Table>
         <TableBody>
           <TableRow>
-            <TableCell className='font-medium'>ID</TableCell>
-            <TableCell>{agent.id}</TableCell>
+            <TableCell className='font-medium text-emerald-300'>ID</TableCell>
+            <TableCell className='text-white'>{agent.id}</TableCell>
           </TableRow>
           <TableRow>
-            <TableCell className='font-medium'>Email</TableCell>
-            <TableCell>{agent.email}</TableCell>
+            <TableCell className='font-medium text-emerald-300'>Email</TableCell>
+            <TableCell className='text-white'>{agent.email}</TableCell>
           </TableRow>
           <TableRow>
-            <TableCell className='font-medium'>First Name</TableCell>
-            <TableCell>{agent.first_name || "N/A"}</TableCell>
+            <TableCell className='font-medium text-emerald-300'>First Name</TableCell>
+            <TableCell className='text-white'>{agent.first_name || "N/A"}</TableCell>
           </TableRow>
           <TableRow>
-            <TableCell className='font-medium'>Last Name</TableCell>
-            <TableCell>{agent.last_name || "N/A"}</TableCell>
+            <TableCell className='font-medium text-emerald-300'>Last Name</TableCell>
+            <TableCell className='text-white'>{agent.last_name || "N/A"}</TableCell>
           </TableRow>
           <TableRow>
-            <TableCell className='font-medium'>Telephone</TableCell>
-            <TableCell>{agent.telephone || "N/A"}</TableCell>
+            <TableCell className='font-medium text-emerald-300'>Telephone</TableCell>
+            <TableCell className='text-white'>{agent.telephone || "N/A"}</TableCell>
           </TableRow>
           <TableRow>
-            <TableCell className='font-medium'>Role</TableCell>
+            <TableCell className='font-medium text-emerald-300'>Role</TableCell>
             <TableCell>
               <Badge variant={getRoleColor(agent.role)}>
                 {formatRole(agent.role)}
@@ -90,12 +80,12 @@ const getRoleColor = (role: string) => {
             </TableCell>
           </TableRow>
           <TableRow>
-            <TableCell className='font-medium'>Created At</TableCell>
-            <TableCell>{new Date(agent.created_at).toLocaleString()}</TableCell>
+            <TableCell className='font-medium text-emerald-300'>Created At</TableCell>
+            <TableCell className='text-white'>{new Date(agent.created_at).toLocaleString()}</TableCell>
           </TableRow>
           <TableRow>
-            <TableCell className='font-medium'>Updated At</TableCell>
-            <TableCell>{new Date(agent.updated_at).toLocaleString()}</TableCell>
+            <TableCell className='font-medium text-emerald-300'>Updated At</TableCell>
+            <TableCell className='text-white'>{new Date(agent.updated_at).toLocaleString()}</TableCell>
           </TableRow>
         </TableBody>
       </Table>
@@ -104,20 +94,20 @@ const getRoleColor = (role: string) => {
     <!-- Agency Information -->
     {
       agent.agency && (
-        <div class='rounded-lg border p-6'>
-          <h3 class='text-lg font-semibold mb-4'>Agency Information</h3>
+        <div class='glass-card p-6'>
+          <h3 class='text-lg font-semibold mb-4 text-emerald-200'>Agency Information</h3>
           <Table>
             <TableBody>
               <TableRow>
-                <TableCell className='font-medium'>Agency ID</TableCell>
-                <TableCell>{agent.agency.id}</TableCell>
+                <TableCell className='font-medium text-emerald-300'>Agency ID</TableCell>
+                <TableCell className='text-white'>{agent.agency.id}</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell className='font-medium'>Agency Name</TableCell>
-                <TableCell>{agent.agency.name}</TableCell>
+                <TableCell className='font-medium text-emerald-300'>Agency Name</TableCell>
+                <TableCell className='text-white'>{agent.agency.name}</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell className='font-medium'>Agency Code</TableCell>
+                <TableCell className='font-medium text-emerald-300'>Agency Code</TableCell>
                 <TableCell>
                   <Badge variant='outline'>{agent.agency.code}</Badge>
                 </TableCell>
@@ -130,11 +120,11 @@ const getRoleColor = (role: string) => {
 
     {
       !agent.agency && agent.agency_id && (
-        <div class='rounded-lg border border-yellow-200 bg-yellow-50 p-6'>
-          <h3 class='text-lg font-semibold mb-2 text-yellow-800'>
+        <div class='glass-card p-6 border-yellow-400/30 bg-yellow-900/20'>
+          <h3 class='text-lg font-semibold mb-2 text-yellow-200'>
             Agency Information
           </h3>
-          <p class='text-yellow-700'>
+          <p class='text-yellow-300'>
             Agency ID: {agent.agency_id} (Agency details not found)
           </p>
         </div>
@@ -144,18 +134,21 @@ const getRoleColor = (role: string) => {
 
   <div slot='actions'>
     <div class='flex gap-2'>
-      <a
-        href={`/admin/agents/${id}/edit`}
-        class='inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2'
-      >
-        Edit Agent
-      </a>
+      <!-- Edit Agent Modal Component -->
+      <EditAgentModal
+        agent={agent}
+        apiToken={String(API_TOKEN)}
+        client:only='react'
+      />
       <a
         href='/admin/agents'
-        class='inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2'
+        class='glass-button px-4 py-2 text-white hover:scale-105 transition-transform border border-emerald-400/30'
       >
         Back to Agents
       </a>
     </div>
   </div>
 </Layout>
+
+<script>
+  </script>
