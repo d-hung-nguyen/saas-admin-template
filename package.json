@@ -28,14 +28,14 @@
     "@radix-ui/react-select": "^2.2.5",
     "@radix-ui/react-slot": "1.2.0",
     "@tanstack/react-table": "8.21.3",
-    "@types/react": "19.0.10",
-    "@types/react-dom": "19.0.4",
+    "@types/react": "^18.2.79",
+    "@types/react-dom": "^18.2.25",
     "astro": "5.10.1",
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
     "lucide-react": "0.525.0",
-    "react": "19.0.0",
-    "react-dom": "19.0.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "react-hook-form": "7.58.1",
     "tailwind-merge": "3.3.1",
     "tailwindcss": "^3.4.0",
@@ -44,20 +44,20 @@
     "zod": "3.25.67"
   },
   "devDependencies": {
-    "wrangler": "4.21.x"
+    "wrangler": "^4.28.0"
   },
   "scripts": {
     "astro": "astro",
     "build": "astro build",
     "cf-typegen": "wrangler types",
-    "check": "npm run build && npm run wrangler:wrapper && wrangler deploy --dry-run",
+    "check": "npm run build && wrangler deploy --dry-run",
     "db:migrate": "wrangler d1 migrations apply DB --local",
     "db:migrate:remote": "wrangler d1 migrations apply DB --remote",
-    "deploy": "npm run wrangler:wrapper && wrangler deploy",
-    "dev": "npm run db:migrate && npm run build && npm run wrangler:wrapper && npx wrangler dev --port 4321 --live-reload",
-    "dev:watch": "npm run db:migrate && npm run build && npm run wrangler:wrapper && npx wrangler dev --port 4321 --live-reload --watch",
+    "deploy": "wrangler deploy",
+    "dev": "npm run db:migrate && npm run build && npx wrangler dev --port 4321 --live-reload",
+    "dev:watch": "npm run db:migrate && npm run build && npx wrangler dev --port 4321 --live-reload --watch",
     "predeploy": "npm run db:migrate:remote",
-    "preview": "npm run build && npm run wrangler:wrapper && wrangler dev",
-    "wrangler:wrapper": "echo 'if (typeof MessageChannel === \"undefined\") { globalThis.MessageChannel = class { constructor() { this.port1 = { postMessage: () => {}, onmessage: null, addEventListener: () => {}, removeEventListener: () => {}, start: () => {}, close: () => {} }; this.port2 = { postMessage: () => {}, onmessage: null, addEventListener: () => {}, removeEventListener: () => {}, start: () => {}, close: () => {} }; } }; }' | cat - src/workflows/wrapper.js > dist/index.js"
+    "preview": "npm run build && wrangler dev",
+    "typegen": "wrangler types"
   }
 }

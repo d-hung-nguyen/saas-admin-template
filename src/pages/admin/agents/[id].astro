@@ -1,20 +1,18 @@
 ---
+import { Badge } from "@/components/ui/badge"
+import {
+Table,
+TableBody,
+TableCell,
+TableRow
+} from "@/components/ui/table"
 import Layout from "@/layouts/Layout.astro"
 import { AgentService } from "@/lib/services/agent"
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
-import { Badge } from "@/components/ui/badge"
 
-const { API_TOKEN, DB, INCENTIVE_DB } = Astro.locals.runtime.env
+const { API_TOKEN, DB } = Astro.locals.runtime.env
 const { id } = Astro.params
 
-const agentService = new AgentService(INCENTIVE_DB as D1Database) // Use INCENTIVE_DB instead of DB
+const agentService = new AgentService(DB as D1Database) // Use DB consistently
 const agent = await agentService.getById(id as string)
 
 if (!agent) {

@@ -1,12 +1,12 @@
 ---
-import Layout from "@/layouts/Layout.astro"
-import { AgentService } from "@/lib/services/agent"
 import { AgentsTable } from "@/components/admin/agents-table"
 import { CreateAgentButton } from "@/components/admin/create-agent"
+import Layout from "@/layouts/Layout.astro"
+import { AgentService } from "@/lib/services/agent"
 
-const { INCENTIVE_DB, API_TOKEN } = Astro.locals.runtime.env
+const { DB, API_TOKEN } = Astro.locals.runtime.env
 
-const agentService = new AgentService(INCENTIVE_DB as D1Database)
+const agentService = new AgentService(DB as D1Database) // Use DB instead of INCENTIVE_DB
 const agents = await agentService.getAll()
 ---
 

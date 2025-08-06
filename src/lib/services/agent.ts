@@ -72,17 +72,18 @@ const processAgentResults = (rows: any[]) => {
 export type Agent = {
   id: string;
   email: string;
-  role: 'agent' | 'hotel_admin' | 'regional_admin' | 'global_admin';
-  agency_id?: string;
+  role: 'agent';
+  agency_id: string;
   first_name?: string;
   last_name?: string;
   telephone?: string;
   created_at: string;
   updated_at: string;
-  agency?: {
+  agency: {
     id: string;
     name: string;
     code: string;
+
   };
 };
 

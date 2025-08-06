@@ -7,24 +7,24 @@ import tailwind from "@astrojs/tailwind"
 
 // https://astro.build/config
 export default defineConfig({
+  output: "server",
   adapter: cloudflare({
     platformProxy: {
       enabled: true,
-      configPath: "wrangler.jsonc",
-      persist: {
-        path: "./.cache/wrangler/v3",
-      },
     },
   }),
-  integrations: [react(), tailwind({ applyBaseStyles: true })],
-  output: "server",
+  integrations: [
+    react({
+      experimentalReactChildren: false,
+    }),
+    tailwind({ applyBaseStyles: false }),
+  ],
   vite: {
-    resolve: {
-      // Use react-dom/server.edge instead of react-dom/server.browser for React 19.
-      // Without this, MessageChannel from node:worker_threads needs to be polyfilled.
-      alias: {
-        "react-dom/server": "react-dom/server.edge",
-      },
+    define: {
+      global: "globalThis",
+    },
+    ssr: {
+      external: ["react-dom/server"],
     },
   },
 })

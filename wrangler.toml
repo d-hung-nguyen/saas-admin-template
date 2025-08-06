@@ -1,0 +1,22 @@
+name = "saas-admin-template"
+main = "./dist/_worker.js"
+compatibility_date = "2024-01-01"
+compatibility_flags = ["nodejs_compat", "nodejs_als"]
+upload_source_maps = true
+
+[assets]
+directory = "./dist"
+
+[observability]
+enabled = true
+
+[vars]
+API_TOKEN = "f78c8aa3a1163de2e05978d4b67a91464e62f855a6f2702bb828b5815d065bbc"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "incentive"
+database_id = "d30c4d6e-e3eb-4c42-b2fd-63fd4aa9ea5b"
+
+[env.production]
+name = "saas-admin-template-production"

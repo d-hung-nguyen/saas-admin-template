@@ -1,8 +1,8 @@
 import { AgentService } from "@/lib/services/agent";
 import { validateApiTokenResponse } from "@/lib/api";
 
-export async function GET({ locals, request }) {
-  const { API_TOKEN, INCENTIVE_DB } = locals.runtime.env;
+export async function GET({ locals, request }: { locals: any; request: Request }) {
+  const { API_TOKEN, DB } = locals.runtime.env;
 
   const invalidTokenResponse = await validateApiTokenResponse(
     request,
@@ -10,7 +10,7 @@ export async function GET({ locals, request }) {
   );
   if (invalidTokenResponse) return invalidTokenResponse;
 
-  const agentService = new AgentService(INCENTIVE_DB);
+  const agentService = new AgentService(DB);
   const agents = await agentService.getAll();
 
   if (agents) {
@@ -23,8 +23,8 @@ export async function GET({ locals, request }) {
   }
 }
 
-export async function POST({ locals, request }) {
-  const { API_TOKEN, INCENTIVE_DB } = locals.runtime.env;
+export async function POST ({locals, request} : { locals: any; request: Request } ) {
+  const { API_TOKEN, DB } = locals.runtime.env;
 
   const invalidTokenResponse = await validateApiTokenResponse(
     request,
@@ -32,11 +32,18 @@ export async function POST({ locals, request }) {
   );
   if (invalidTokenResponse) return invalidTokenResponse;
 
-  const agentService = new AgentService(INCENTIVE_DB);
+  const agentService = new AgentService(DB);
 
   try {
-    const body = await request.json();
-    
+    const body = await request.json() as {
+      email?: string;
+      role?: string;
+      agency_id?: string;
+      first_name?: string;
+      last_name?: string;
+      telephone?: string;
+    };
+
     // Validate required fields
     if (!body.email || !body.role) {
       return Response.json(
@@ -45,9 +52,19 @@ export async function POST({ locals, request }) {
       );
     }
 
+    const allowedRoles = ["agent", "hotel_admin", "regional_admin", "global_admin"] as const;
+    const role = allowedRoles.includes(body.role as any) ? body.role as typeof allowedRoles[number] : undefined;
+
+    if (!role) {
+      return Response.json(
+        { message: "Invalid role provided", success: false },
+        { status: 400 },
+      );
+    }
+
     const success = await agentService.create({
       email: body.email,
-      role: body.role,
+      role: "agent",
       agency_id: body.agency_id || undefined,
       first_name: body.first_name || undefined,
       last_name: body.last_name || undefined,

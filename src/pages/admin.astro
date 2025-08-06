@@ -1,40 +1,30 @@
 ---
-import { BadgeDollarSign, CalendarSync, User } from "lucide-react"
-import Layout from "@/layouts/Layout.astro"
 import { APIDocumentation } from "@/components/admin/api-documentation"
-import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
-import "@/styles/globals.css"
+import { Label } from "@/components/ui/label"
+import Layout from "@/layouts/Layout.astro"
+import { BadgeDollarSign, CalendarSync, User } from "lucide-react"
 
 import { AgentService } from "@/lib/services/agent"
-import { CustomerService } from "@/lib/services/customer"
-import { SubscriptionService } from "@/lib/services/subscription"
 import { CustomerSubscriptionService } from "@/lib/services/customer_subscription"
+import { SubscriptionService } from "@/lib/services/subscription"
 
-const { DB, INCENTIVE_DB } = Astro.locals.runtime.env
+const { DB } = Astro.locals.runtime.env
 
-const customerService = new CustomerService(DB)
-const agentService = new AgentService(INCENTIVE_DB as D1Database)
+const agentService = new AgentService(DB) // Use DB for agents
 const subscriptionService = new SubscriptionService(DB)
 const customerSubscriptionService = new CustomerSubscriptionService(DB)
 
-const customers = await customerService.getAll()
+const agents = await agentService.getAll()
 const subscriptions = await subscriptionService.getAll()
 const customerSubscriptions = await customerSubscriptionService.getAll()
-const agents = await agentService.getAll()
 
 const data = [
   {
     name: "Agents",
     value: agents.length,
-    href: "/admin/agents",
-  },
-
-  {
-    name: "Customers",
-    value: customers.length,
     icon: User,
-    href: "/admin/customers",
+    href: "/admin/agents",
   },
   {
     name: "Subscriptions",
@@ -46,53 +36,64 @@ const data = [
     name: "Customer Subscriptions",
     value: customerSubscriptions.length,
     icon: CalendarSync,
+    href: "/admin/customer-subscriptions",
   },
 ]
 ---
 
-<Layout title='Admin'>
+<Layout title='Admin Dashboard'>
   <div class='space-y-8'>
-    <div class='grid gap-4 md:grid-cols-2 lg:grid-cols-3 mt-4'>
+    <!-- Stats Cards -->
+    <div class='grid gap-6 md:grid-cols-3'>
       {
-        data.map(item =>
-          item.href ? (
-            <div class='rounded-xl border bg-card text-card-foreground hover:bg-muted shadow transition-colors'>
-              <a href={item.href}>
-                <div class='p-6'>
-                  <div class='flex flex-row items-center justify-between space-y-0 pb-2'>
-                    <div class='tracking-tight text-sm font-medium'>
-                      {item.name}
-                    </div>
-                  </div>
-                  <div class='pt-0'>
-                    <div class='text-2xl font-bold'>{item.value}</div>
-                  </div>
-                </div>
-              </a>
-            </div>
-          ) : (
-            <div class='rounded-xl border bg-card text-card-foreground shadow'>
-              <div class='p-6'>
-                <div class='flex flex-row items-center justify-between space-y-0 pb-2'>
-                  <div class='tracking-tight text-sm font-medium'>
-                    {item.name}
-                  </div>
-                </div>
-                <div class='pt-0'>
-                  <div class='text-2xl font-bold'>{item.value}</div>
-                </div>
+        data.map((item) => {
+          const Icon = item.icon
+          return (
+            <a
+              href={item.href}
+              class='glass-card p-6 hover:scale-105 transition-transform duration-200 block'
+            >
+              <div class='flex items-center justify-between space-y-0 pb-2'>
+                <h3 class='text-sm font-medium text-emerald-200'>{item.name}</h3>
+                <Icon className='h-5 w-5 emerald-accent' />
               </div>
-            </div>
+              <div class='space-y-1'>
+                <div class='text-3xl font-bold text-white'>{item.value}</div>
+                <p class='text-xs text-emerald-300'>
+                  Click to manage {item.name.toLowerCase()}
+                </p>
+              </div>
+            </a>
           )
-        )
+        })
       }
     </div>
 
-    <section class='space-y-4'>
-      <h2 class='text-3xl font-bold tracking-tight'>API</h2>
-      <div>
-        <APIDocumentation client:only='react' />
+    <!-- API Documentation -->
+    <div class='glass-card p-6'>
+      <h2 class='text-xl font-bold text-white mb-4'>API Documentation</h2>
+      <APIDocumentation client:only='react' />
+    </div>
+
+    <!-- API Token Display -->
+    <div class='glass-card p-6'>
+      <div class='space-y-4'>
+        <div class='space-y-2'>
+          <Label htmlFor='api-token' className='text-emerald-200 font-medium'>
+            API Token
+          </Label>
+          <Input
+            id='api-token'
+            type='text'
+            value={Astro.locals.runtime.env.API_TOKEN}
+            readOnly
+            className='font-mono text-sm glass-input'
+          />
+        </div>
+        <p class='text-sm text-emerald-300'>
+          Use this token to authenticate your API requests. Include it in the Authorization header as "Bearer [token]".
+        </p>
       </div>
-    </section>
+    </div>
   </div>
 </Layout>
